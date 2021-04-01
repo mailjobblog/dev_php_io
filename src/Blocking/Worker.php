@@ -11,7 +11,6 @@ class Worker extends WorkBase
     }
 
     protected function accept(){
-        var_dump($this->server);die;
         while(true){
             // 监听是否存在连接
             $conn = stream_socket_accept($this->server);
