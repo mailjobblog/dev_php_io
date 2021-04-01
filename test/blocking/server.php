@@ -10,7 +10,7 @@ $server->on('connect',function($server,$client){
 });
 
 $server->on('receive',function($server,$client,$data){
-
+    dd($data,'处理client的数据');
 });
 
 $server->on('close',function($server,$client){
