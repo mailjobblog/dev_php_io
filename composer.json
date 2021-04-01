@@ -1,0 +1,24 @@
+{
+    "name": "mailjobblog/dev_php_io",
+    "authors": [
+        {
+            "name": "jefferyjob",
+            "email": "58850169@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DevPhpIO\\": "src"
+        },
+      	 "files":[
+      		"src/Support/Helper.php"
+      	]
+    },
+    "require": {},
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
+    }
+}
