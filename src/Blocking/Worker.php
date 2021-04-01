@@ -23,6 +23,8 @@ class Worker extends WorkBase
                 // 接收服务的信息
                 // $data = fread($conn, 65535);
                 // $this->events['receive']($this, $conn, $data);
+            }else{
+                var_dump($this->server);die;
             }
 
             // 此处缺乏心跳检测
