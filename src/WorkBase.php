@@ -46,7 +46,7 @@ abstract class WorkBase {
      * 回复消息
      */
     public function send($client,$data){
-
+        fwrite($client, $data);
     }
 
     /**
