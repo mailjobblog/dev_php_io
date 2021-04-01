@@ -64,7 +64,7 @@ abstract class WorkBase {
      */
     public function start(){
         dd($this->events,'服务注册的事件');
-        $this->check();// 检查启动信息
+        // $this->check();// 检查启动信息
         $this->accept(); // 启动
     }
 
