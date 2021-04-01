@@ -21,12 +21,12 @@ class Worker extends WorkBase
                 $this->events['receive']($this, $conn, $data);
             }
 
-            // 此处缺乏心跳检测
+            # 此处缺乏心跳检测 #
 
-            // if (!empty($conn) && \get_resource_type($conn) == "Unknown") {
-            //     // 断开连接
-            //     $this->events['close']($this, $conn);
-            // }
+            // 判断连接是否断开
+            if (!empty($conn) && \get_resource_type($conn) == "Unknown") {
+                $this->events['close']($this, $conn);// 断开连接
+            }
         }
     }
 

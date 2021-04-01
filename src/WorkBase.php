@@ -55,7 +55,8 @@ abstract class WorkBase {
      * 关闭
      */
     public function close($client){
-
+        \fclose($client);
+        dd($client);
     }
 
     /**
