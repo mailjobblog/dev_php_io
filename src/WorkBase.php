@@ -5,7 +5,7 @@ namespace DevPhpIO;
  */
 abstract class WorkBase {
 
-    protected $server = [];
+    protected $server;
 
     // 事件
     protected $events = [
@@ -15,11 +15,11 @@ abstract class WorkBase {
         // 'connect' => null
     ];
 
-    protected $config = [];
+    protected $config;
 
     public function __construct($host, $port){
         $this->server = stream_socket_server("tcp://{$host}:{$port}");
-        echo "tcp://{$host}:{$port}";
+        echo "tcp://{$host}:{$port}\n";
     }
 
     /**
