@@ -18,4 +18,10 @@ $m = time() - $time;
 
 echo "执行时间" . $m . "秒钟\n";
 
+// 用 feof 判断是否到达结尾的位置，如果到达，则跳出输出服务端返回的结果
+while(!feof($fp)){
+  sleep(1);
+  var_dump(fread($fp,65535));
+}
+
 fclose($fp);
