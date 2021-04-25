@@ -4,7 +4,7 @@ require __DIR__."/../../vendor/autoload.php";
 $fp = stream_socket_client("tcp://127.0.0.1:9500");
 
 //设置套接字为非阻塞模型
-stream_set_blocking($client, 0);
+stream_set_blocking($fp, 0);
 
 fwrite($fp,'hello NO-blocking');
 
