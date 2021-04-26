@@ -18,10 +18,21 @@ $m = time() - $time;
 
 echo "执行时间" . $m . "秒钟\n";
 
+// # 1
 // 用 feof 判断是否到达结尾的位置，如果到达，则跳出输出服务端返回的结果
-while(!feof($fp)){
-  sleep(1);
-  var_dump(fread($fp,65535));
-}
+// while(!feof($fp)){
+//  sleep(1);
+//  var_dump(fread($fp,65535));
+// }
+
+// # 2
+// 用 stream_select 去循环遍历server的读写状态
+// while(!feof($fp)){
+//   sleep(1);
+//   $read[] = $fp;
+//   stream_select($read, $write, $error, 1);
+//   var_dump($read);
+//   var_dump(fread($fp,65535));
+// }
 
 fclose($fp);
