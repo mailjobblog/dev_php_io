@@ -2,10 +2,11 @@
 namespace DevPhpIO\Blocking;
 
 use DevPhpIO\WorkBase;
-
+/**
+ * 阻塞模型和非阻塞模型继承类
+ */
 class Worker extends WorkBase
 {
-
     protected function accept(){
         while(true){
             // 监听是否存在连接
