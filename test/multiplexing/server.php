@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__."/../../vendor/autoload.php";
 
-use IoStar\Muliplexing\Worker;
+use DevPhpIO\Multiplexing\Worker;
 
 $server = new Worker('0.0.0.0', 9500);
 $server->on('connect', function($server, $client){
