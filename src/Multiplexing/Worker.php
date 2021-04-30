@@ -55,11 +55,8 @@ class Worker extends WorkBase
     protected function createConnect(){
          // 监听是否存在连接
          $conn = stream_socket_accept($this->server);
-
          if (!empty($conn)) {
-            // 接收服务的信息
-            $data = fread($conn, 65535);
-            $this->events['receive']($this, $conn, $data);
+            $this->events['connect']($this, $conn);
             return $conn;
         }
         return null;
@@ -84,13 +81,13 @@ class Worker extends WorkBase
      */
     protected function checkConnect($buffer, $conn)
     {
-        if (\strlen($buffer) === 0) {
-            if (! \get_resource_type($conn) == "Unknown"){
+        if (strlen($buffer) === 0) {
+            if (!get_resource_type($conn) == "Unknown"){
                 // 断开连接
                 $this->close($conn);
             }
-            \call_user_func($this->events['close'], $this, $conn );
-            unset($this->sockets[(int) $conn]);
+            call_user_func($this->events['close'], $this, $conn );
+            unset($this->socket[(int) $conn]);
         }
     }
 }
