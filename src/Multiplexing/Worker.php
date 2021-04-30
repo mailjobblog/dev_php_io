@@ -31,7 +31,7 @@ class Worker extends WorkBase
     protected function accept(){
         while(true) {
             $reads = $this->socket;
-            stream_select($reads, $w, $s, 0);
+            stream_select($reads, $w, $e, 0);
             foreach($reads as $key => $socket) {
                 if($socket == $this->server) {
                     // 有新的连接，要建立通信
