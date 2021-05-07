@@ -3,63 +3,36 @@ namespace DevPhpIO\Signal;
 
 use DevPhpIO\WorkBase;
 /**
- * 多路复用模型
+ * 信号模型
  */
 class Worker extends WorkBase
 {
-    /**
-     * 服务的连接 socket 定义
-     */
-    protected $socket = [];
-
-    /**
-     * 资源初始化
-     */
-    public function __construct($host, $port)
-    {
-        parent::__construct($host, $port);
-
-        // 设置为非阻塞模型
-        stream_set_blocking($this->server, 0);
-
-        // 获取 server 的资源标识，并进行数组的赋值
-        // 记录服务的 socket
-        $this->socket[(int)$this->server] = $this->server;
-        
-    }
-
+   
     protected function accept(){
-        while(true) {
-            $reads = $this->socket;
-            stream_select($reads, $w, $e, 0);
-            foreach($reads as $key => $socket) {
-                if($socket == $this->server) {
-                    // 有新的连接，要建立通信
-                    $conn = $this->createConnect();
-                    if($conn) {
-                        $this->socket[(int)$conn] = $conn;
-                    }else{
-                        dd('连接建立失败');
-                    }
-                }else{
-                    // 进行消息通信
-                    $this->sendMessage($socket);
-                }
+        while (true) {
+            // 监听是否存在连接
+            $conn = stream_socket_accept($this->server);
+            if (!empty($conn)) {
+                // 触发建立连接事件
+                $this->events['connect']($this, $conn);
             }
+
+            // 信号模型实现
+            pcntl_signal(SIGIO, $this->sigHandler($conn));
+            posix_kill(posix_getpid(), SIGIO);
+            pcntl_signal_dispatch();
         }
     }
 
-    /**
-     * 建立连接
-     */
-    protected function createConnect(){
-         // 监听是否存在连接
-         $conn = stream_socket_accept($this->server);
-         if (!empty($conn)) {
-            $this->events['connect']($this, $conn);
-            return $conn;
-        }
-        return null;
+    public function sigHandler($conn)
+    {
+        return function($sig) use ($conn){
+            switch ($sig) {
+            case SIGIO:
+                $this->sendMessage($conn);
+                break;
+            }
+        };
     }
 
      /**
