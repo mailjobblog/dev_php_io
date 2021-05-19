@@ -3,7 +3,7 @@ namespace DevPhpIO\Async;
 
 use \Event;
 
-class Events
+class EventClass
 {
    protected $client;
 

@@ -4,6 +4,7 @@ namespace DevPhpIO\Async;
 use DevPhpIO\WorkBase;
 use \EventBase;
 use \Event;
+use DevPhpIO\Async\EventClass;
 
 class Worker extends WorkBase
 {
@@ -26,8 +27,8 @@ class Worker extends WorkBase
                 // 触发建立连接事件
                 $this->events['connect']($this, $conn);
             }
-            // 处理通信
-            (new Events($eventBase, $conn))->handler($this, $count);
+            // 面向对象， 处理通信
+            (new EventClass($eventBase, $conn))->handler($this, $count);
         });
         $count[(int) $this->server][Event::WRITE | Event::READ | Event::PERSIST] = $this->server;
         $event->add();
