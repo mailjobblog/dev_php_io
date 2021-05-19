@@ -2,7 +2,7 @@
 
 require_once __DIR__."/../../vendor/autoload.php";
 
-use IoStar\Async\Worker;
+use DevPhpIO\Async\Worker;
 
 
 $server = new Worker('0.0.0.0', 9500);
