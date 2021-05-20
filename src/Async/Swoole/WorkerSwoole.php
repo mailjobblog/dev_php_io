@@ -6,28 +6,31 @@ use Swoole\Event;
 
 class WorkerSwoole extends WorkBase
 {
-    protected function accept() {
-        Event::add($this->server, $this->createConnect());
+    protected function accept()
+    {
+        Event::add($this->server, $this->createConn());
     }
-
-    public function createConnect(){
-        return function ($socket){
-            $connect = stream_socket_accept($this->server);
-            if (!empty($connect) && get_resource_type($connect) == "stream") {
+    // 创建连接
+    public function createConn()
+    {
+        return function($socket){
+            $conn = @stream_socket_accept($this->server);
+            if (!empty($conn) && get_resource_type($conn) == "stream") {
                 //触发事件的连接的回调
-                $this->events['connect']($this, $connect);
-                Event::add($connect, $this->sendMessage());
+                $this->events['connect']($this, $conn);
+                Event::add($conn, $this->sendMessage());
             }
         };
     }
 
-    public function sendMessage(){
-        return function ($connect){
-            $buffer = fread($connect, 65535);
+    public function sendMessage()
+    {
+        return function($conn){
+            $buffer = fread($conn, 65535);
             if ('' === $buffer || false === $buffer) {
-                $this->checkConn($buffer, $connect);
+                $this->checkConn($buffer, $conn);
             } else {
-                $this->events['receive']($this, $connect, $buffer);
+                $this->events['receive']($this, $conn, $buffer);
             }
         };
     }
